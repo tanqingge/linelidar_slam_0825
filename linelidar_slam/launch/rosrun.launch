@@ -1,0 +1,31 @@
+<launch>
+    
+    <!--- Sim Time -->
+
+    <!---Linelidar-SLAM -->    
+    <node pkg="linelidar_slam" type="PointProcess"    name="linelidar_slam"    output="screen"/>
+    
+    
+    <node pkg="linelidar_slam" type="FeatureAssociation" name="featureAssociation" output="screen"/>
+    
+
+    <node pkg="linelidar_slam" type="BuildMap" name="BuildMap" output="screen">
+        <rosparam file="$(find linelidar_slam)/config/default.yaml" command="load"/>
+    </node>
+
+    <node pkg="linelidar_slam" type="Odometry" name="Odometry" output="screen">
+        <rosparam file="$(find linelidar_slam)/config/default.yaml" command="load"/>
+    </node>
+
+    <node pkg="linelidar_slam" type="GlobalLines" name="GlobalLines" output="screen">
+    <rosparam file="$(find linelidar_slam)/config/default.yaml" command="load"/>
+    </node>
+
+    <node pkg="rviz" type="rviz" name="rviz" output="screen" 
+      args="-d $(find linelidar_slam)/rviz/default.rviz" required="true">
+    </node>
+
+   
+
+
+</launch>
